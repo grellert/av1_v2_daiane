@@ -5,3 +5,5 @@ cmbuild
 .vscode
 .gitignore
 TAGS
+build
+release
