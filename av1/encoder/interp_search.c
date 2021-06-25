@@ -14,6 +14,9 @@
 #include "av1/encoder/model_rd.h"
 #include "av1/encoder/rdopt_utils.h"
 #include "av1/encoder/reconinter_enc.h"
+#include "apps/aomenc.h"
+
+extern int g_allowed_filters;
 
 // return mv_diff
 static INLINE int is_interp_filter_good_match(
@@ -328,16 +331,50 @@ static DUAL_FILTER_TYPE find_best_interp_rd_facade(
                       ? cpi->interp_search_flags.default_interp_skip_flags
                       : skip_pred;
 
+  // @grellert: testa os filtros
+
   // Loop over the all filter types and evaluate for only allowed filter types
   for (int filt_type = SHARP_SHARP; filt_type >= REG_REG; --filt_type) {
     const int is_filter_allowed =
         get_interp_filter_allowed_mask(allow_interp_mask, filt_type);
-    if (is_filter_allowed)
+    
+    char filter_flag = 1;
+    if(g_allowed_filters == 0)
+      filter_flag = 0;
+    else if(g_allowed_filters == 1){ // somente REG
+      if(filt_type == REG_REG)
+        filter_flag = 1;
+      else
+        filter_flag = 0;
+    }
+    else if (g_allowed_filters == 2){ // REG e SHARP
+      if( (filt_type == REG_REG) || filt_type == (REG_SHARP) ){ // TODO
+        // @grellert TODO
+        filter_flag = 1;
+      }
+      else{
+        filter_flag = 0;
+      }
+    }
+    else if (g_allowed_filters == 3){ // Todos os filtros
+      filter_flag = 1;
+    }
+
+    if (is_filter_allowed && filter_flag){
       if (interpolation_filter_rd(x, cpi, tile_data, bsize, orig_dst, rd,
                                   rd_stats_y, rd_stats, switchable_rate,
                                   dst_bufs, filt_type, switchable_ctx,
-                                  tmp_skip_pred))
+                                  tmp_skip_pred)){
         best_filt_type = filt_type;
+      }
+      // TODO gravar (escrever em um arquivo, por exemplo) os tamanhos de bloco que estão sendo filtrados
+      // bsize e filter_type
+      // abre arquivo (anexar - a)
+      // print no arquivo
+      // fecha arquivo
+
+    
+    }
     tmp_skip_pred = skip_pred;
   }
   return best_filt_type;

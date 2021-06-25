@@ -149,6 +149,7 @@ const av1_codec_arg_definitions_t g_av1_codec_arg_defs = {
   .pass_arg = ARG_DEF(NULL, "pass", 1, "Pass to execute (1/2/3)"),
   .fpf_name = ARG_DEF(NULL, "fpf", 1, "First pass statistics file name"),
   .limit = ARG_DEF(NULL, "limit", 1, "Stop encoding after n input frames"),
+  .allowed_filters = ARG_DEF(NULL, "allowed_filters", 1, "Filtros habilitados. 0-Nenhum,1-Reg,2-Reg+Sharp,3-Todos"),
   .skip = ARG_DEF(NULL, "skip", 1, "Skip the first n input frames"),
   .good_dl = ARG_DEF(NULL, "good", 0, "Use Good Quality Deadline"),
   .rt_dl = ARG_DEF(NULL, "rt", 0, "Use Realtime Quality Deadline"),

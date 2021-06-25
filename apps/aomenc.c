@@ -259,6 +259,9 @@ const arg_def_t *main_args[] = { &g_av1_codec_arg_defs.help,
                                  &g_av1_codec_arg_defs.recontest,
                                  NULL };
 
+// grellert
+const int g_allowed_filters = g_av1_codec_arg_defs.allowed_filters;
+
 const arg_def_t *global_args[] = {
   &g_av1_codec_arg_defs.use_yv12,
   &g_av1_codec_arg_defs.use_i420,

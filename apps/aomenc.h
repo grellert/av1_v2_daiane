@@ -50,6 +50,8 @@ struct AvxEncoderConfig {
   aom_chroma_sample_position_t csp;
   cfg_options_t encoder_config;
 };
+// grellert
+extern int g_allowed_filters;
 
 #ifdef __cplusplus
 }  // extern "C"
